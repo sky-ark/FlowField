@@ -69,14 +69,17 @@ public class FlowFieldManager : MonoBehaviourSingleton<FlowFieldManager>
             pathfinder.GenerateFlowField();
             
             _flowFields.Add(cellIndexFromWorldPosition, pathfinder.Matrix);
-            Debug.Log("flow field added to dictionary");
         }
         // S'il existe un flow field pour la destination alors on le récupère dans le dictionnaire
         Cell[,] flowField = _flowFields[cellIndexFromWorldPosition];
 
         // Ensuite on renvoie la direction du flowfield en fonction de la position
         Cell cell = flowField[position.x, position.y];
-        Debug.Log(cell.Position + " has as direction: " + cell.Direction);
+        foreach (Cell cell1 in flowField)
+        {
+            Debug.Log(cell1.Position + " has as direction: " + cell1.Direction);
+        }
+        Debug.Log("searching: " + cell.Position + " with direction: " + cell.Direction);
         return cell.Direction;
     }
     

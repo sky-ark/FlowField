@@ -118,7 +118,7 @@ public class Pathfinder
                     if (neighborCost < cost)
                     {
                         Vector3 direction = neighborCell.Position - cell.Position;
-                        Debug.Log("cell"+ cell.Position + "Direction = " + direction);
+                        // Debug direction ici donne la bonne valeur (mais manque la coordonnée de l'ia
                         if (direction.sqrMagnitude > 0f)
                         {
                             direction.Normalize();
@@ -128,6 +128,7 @@ public class Pathfinder
 
                     if (lowerDirections.Count == 0)
                     {
+                        // Peut etre que ceci passe tout le temps donc lowerDirections tout le temps == 0 ?
                         cell.Direction = Vector2Int.zero;
                     }
                 }
