@@ -17,6 +17,7 @@ public class FlowFieldManager : MonoBehaviourSingleton<FlowFieldManager>
 
     [SerializeField] private GameObject _destinationTest;
     [SerializeField] private Tilemap _tilemap;
+    [SerializeField] private Tilemap _obstacleTilemap;
     [SerializeField] private TileBase _redTile;
     
     private readonly Pathfinder _pathfinder = new Pathfinder();
@@ -34,7 +35,7 @@ public class FlowFieldManager : MonoBehaviourSingleton<FlowFieldManager>
         _width = bounds.size.x;
         _height = bounds.size.y;
         
-        _pathfinder.CreateGrid(_width, _height, bounds, _tilemap, _redTile);
+        _pathfinder.CreateGrid(_width, _height, bounds, _tilemap, _obstacleTilemap,_redTile);
         
         Vector2Int cellIndexFromWorldPosition = GetCellIndexFromWorldPosition(_destinationTest.transform.position);
         _pathfinder.GenerateBFS(cellIndexFromWorldPosition, _width, _height);
@@ -64,7 +65,7 @@ public class FlowFieldManager : MonoBehaviourSingleton<FlowFieldManager>
         if (!_flowFields.ContainsKey(cellIndexFromWorldPosition))
         {
             Pathfinder pathfinder = new Pathfinder();
-            pathfinder.CreateGrid(_width, _height, bounds, _tilemap, _redTile);
+            pathfinder.CreateGrid(_width, _height, bounds, _tilemap, _obstacleTilemap, _redTile);
             pathfinder.GenerateBFS(cellIndexFromWorldPosition, _width, _height);
             pathfinder.GenerateFlowField();
 

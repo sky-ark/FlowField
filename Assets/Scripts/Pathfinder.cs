@@ -7,7 +7,7 @@ public class Pathfinder
     
     public Cell[,] Matrix;
     
-    public void CreateGrid(int width, int height, BoundsInt bounds, Tilemap tilemap, TileBase redTile)
+    public void CreateGrid(int width, int height, BoundsInt bounds, Tilemap tilemap, Tilemap obstacleTilemap, TileBase redTile)
     {
         // Initialise la matrice
         Matrix = new Cell[width, height];
@@ -30,7 +30,9 @@ public class Pathfinder
                 Matrix[x, y].Position = tilemap.CellToWorld(tilePos) + tilemap.cellSize / 2f;
 
                 // Case bloquée ou libre
-                if (tile == redTile)
+                if (obstacleTilemap != null && obstacleTilemap.HasTile(tilePos))
+                    Matrix[x, y].Valid = false;
+                else if (tile == redTile)
                     Matrix[x, y].Valid = false;
                 else
                     Matrix[x, y].Valid = true;
