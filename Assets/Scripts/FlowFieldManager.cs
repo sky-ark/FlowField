@@ -54,7 +54,7 @@ public class FlowFieldManager : MonoBehaviourSingleton<FlowFieldManager>
     {
         // Récupérer cellule vers laquel on flow field (target)
         Vector2Int cellIndexFromWorldPosition = GetCellIndexFromWorldPosition(destination);
-        
+
         // Récupère les limites de la tilemap
         BoundsInt bounds = _tilemap.cellBounds;
         _width = bounds.size.x;
@@ -67,9 +67,10 @@ public class FlowFieldManager : MonoBehaviourSingleton<FlowFieldManager>
             pathfinder.CreateGrid(_width, _height, bounds, _tilemap, _redTile);
             pathfinder.GenerateBFS(cellIndexFromWorldPosition, _width, _height);
             pathfinder.GenerateFlowField();
-            
+
             _flowFields.Add(cellIndexFromWorldPosition, pathfinder.Matrix);
         }
+
         // S'il existe un flow field pour la destination alors on le récupère dans le dictionnaire
         Cell[,] flowField = _flowFields[cellIndexFromWorldPosition];
 
@@ -79,6 +80,7 @@ public class FlowFieldManager : MonoBehaviourSingleton<FlowFieldManager>
         {
             Debug.Log(cell1.Position + " has as direction: " + cell1.Direction);
         }
+
         Debug.Log("searching: " + cell.Position + " with direction: " + cell.Direction);
         return cell.Direction;
     }

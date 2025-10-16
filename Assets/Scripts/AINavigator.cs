@@ -11,7 +11,7 @@ public class AINavigator : MonoBehaviour
         Vector2Int myPosition = (Vector2Int)Vector3Int.FloorToInt(transform.position);
         
         // Récupère direction
-        Vector2Int myDirection = FlowFieldManager.Instance.GetDirectionAtPosition(myPosition,  transform.position);
+        Vector2Int myDirection = FlowFieldManager.Instance.GetDirectionAtPosition(myPosition,  destination.transform.position);
         
         // Convertir myDirection en direction
         Vector3 direction = new Vector3
