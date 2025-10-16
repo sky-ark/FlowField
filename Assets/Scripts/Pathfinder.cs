@@ -110,6 +110,8 @@ public class Pathfinder
                 //Chercher dans les cases adjacentes un cout plus faible
                 List<Vector3> lowerDirections = new List<Vector3>();
                 Vector2Int currentIndex = new Vector2Int(x, y);
+                Vector2Int chosenDirection = Vector2Int.zero;
+                bool foundLower = false;
                 foreach (Vector2Int neighbor in GetNeighbors(currentIndex, width, height))
                 {
                     Cell neighborCell = Matrix[neighbor.x, neighbor.y];
@@ -117,22 +119,16 @@ public class Pathfinder
                     int neighborCost = neighborCell.Cost;
                     if (neighborCost < cost)
                     {
-                        Vector3 direction = neighborCell.Position - cell.Position;
-                        // Debug direction ici donne la bonne valeur (mais manque la coordonnée de l'ia
-                        if (direction.sqrMagnitude > 0f)
-                        {
-                            direction.Normalize();
-                            lowerDirections.Add(direction);
-                        }
-                    }
-
-                    if (lowerDirections.Count == 0)
-                    {
-                        // Peut etre que ceci passe tout le temps donc lowerDirections tout le temps == 0 ?
-                        cell.Direction = Vector2Int.zero;
+                        Vector2Int delta = neighbor - currentIndex;
+                        delta = new Vector2Int(Mathf.Clamp(delta.x, -1, 1), Mathf.Clamp(delta.y, -1, 1));
+                        chosenDirection = delta;
+                        foundLower = true;
+                        break;
                     }
                 }
-
+            
+                if (!foundLower) cell.Direction = Vector2Int.zero;
+                else cell.Direction = chosenDirection;
                 Matrix[x, y] = cell;
             }
         }

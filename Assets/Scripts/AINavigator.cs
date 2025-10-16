@@ -5,7 +5,7 @@ public class AINavigator : MonoBehaviour
     [SerializeField] float moveSpeed = 5f;
     public GameObject destination;
     
-    private void Start()
+    private void Update()
     {
         // Convertir transform.position en myPosition
         Vector2Int myPosition = (Vector2Int)Vector3Int.FloorToInt(transform.position);
